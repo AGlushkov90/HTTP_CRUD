@@ -1,0 +1,14 @@
+version: "1"
+services:
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=http_crud
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/http_crud_data
+volumes:
+  pgdata:
