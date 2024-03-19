@@ -21,6 +21,11 @@ public class ORMFileRepositoryImpl implements FileRepository {
     }
 
     @Override
+    public File getByID(Long aLong, Session session) {
+        return null;
+    }
+
+    @Override
     public List<File> getAll() {
         try (Session session = ORMCommonRepository.getSession()) {
             List<File> files = session.createQuery("FROM File").list();
@@ -29,6 +34,11 @@ public class ORMFileRepositoryImpl implements FileRepository {
             e.printStackTrace();
 
         }
+        return null;
+    }
+
+    @Override
+    public List<File> getAll(Session session) {
         return null;
     }
 
@@ -60,6 +70,7 @@ public class ORMFileRepositoryImpl implements FileRepository {
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
+
         }
         return null;
     }
@@ -77,6 +88,11 @@ public class ORMFileRepositoryImpl implements FileRepository {
             e.printStackTrace();
 
         }
+        return null;
+    }
+
+    @Override
+    public File edit(File item, Session session) {
         return null;
     }
 }

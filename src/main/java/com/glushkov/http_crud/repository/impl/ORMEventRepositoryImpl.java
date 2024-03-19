@@ -21,8 +21,30 @@ public class ORMEventRepositoryImpl implements EventRepository {
     }
 
     @Override
+    public Event getByID(Long id, Session session) {
+        try {
+            return session.get(Event.class, id);
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public List<Event> getAll() {
         try (Session session = ORMCommonRepository.getSession()) {
+            List<Event> events = session.createQuery("FROM Event").list();
+            return events;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+
+        }
+        return null;
+    }
+
+    @Override
+    public List<Event> getAll(Session session) {
+        try {
             List<Event> events = session.createQuery("FROM Event").list();
             return events;
         } catch (HibernateException e) {
@@ -54,7 +76,7 @@ public class ORMEventRepositoryImpl implements EventRepository {
         Transaction tx = null;
         try (Session session = ORMCommonRepository.getSession()) {
             tx = session.beginTransaction();
-            session.merge(itemToSave);
+            itemToSave = session.merge(itemToSave);
             tx.commit();
             return itemToSave;
         } catch (HibernateException e) {
@@ -77,6 +99,11 @@ public class ORMEventRepositoryImpl implements EventRepository {
             e.printStackTrace();
 
         }
+        return null;
+    }
+
+    @Override
+    public Event edit(Event item, Session session) {
         return null;
     }
 }

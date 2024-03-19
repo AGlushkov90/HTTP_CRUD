@@ -21,8 +21,23 @@ public class ORMUserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public User getByID(Long id, Session session) {
+        try  {
+            return session.get(User.class, id);
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public List<User> getAll() {
-        try (Session session = ORMCommonRepository.getSession()) {
+        return null;
+    }
+
+      @Override
+    public List<User> getAll(Session session) {
+        try {
             List<User> users = session.createQuery("FROM User").list();
             return users;
         } catch (HibernateException e) {
@@ -54,7 +69,7 @@ public class ORMUserRepositoryImpl implements UserRepository {
         Transaction tx = null;
         try (Session session = ORMCommonRepository.getSession()) {
             tx = session.beginTransaction();
-            session.merge(itemToSave);
+            itemToSave = session.merge(itemToSave);
             tx.commit();
             return itemToSave;
         } catch (HibernateException e) {
@@ -74,6 +89,18 @@ public class ORMUserRepositoryImpl implements UserRepository {
             return itemToUpdate;
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
+            e.printStackTrace();
+
+        }
+        return null;
+    }
+
+    @Override
+    public User edit(User item, Session session) {
+        try  {
+            session.update(item);
+            return item;
+        } catch (HibernateException e) {
             e.printStackTrace();
 
         }

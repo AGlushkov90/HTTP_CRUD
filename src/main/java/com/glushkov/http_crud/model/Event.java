@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table()
+@Table(name = "events")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,8 +17,12 @@ public class Event extends BaseItem{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     @JsonIgnore
+
     private User user;
 
-    @OneToOne(mappedBy = "event")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn( name = "file_id", referencedColumnName = "id")
     private File file;
+
+
 }

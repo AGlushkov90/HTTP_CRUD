@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS User_name  (
+CREATE TABLE IF NOT EXISTS users  (
  
     id serial NOT NULL PRIMARY KEY,
     name varchar NOT NULL,
@@ -8,29 +8,29 @@ CREATE TABLE IF NOT EXISTS User_name  (
 
 );
 
-CREATE TABLE IF NOT EXISTS Event (
+CREATE TABLE IF NOT EXISTS files  (
 
     id serial NOT NULL PRIMARY KEY,
-    user_id int NOT NULL,
-    created timestamp NOT NULL,
-    updated timestamp,
-    status int NOT NULL,
-     CONSTRAINT fk
-       FOREIGN KEY (user_id) REFERENCES User_name (id)
-
-);
-
-CREATE TABLE IF NOT EXISTS File  (
-
-    id serial NOT NULL PRIMARY KEY,
-    event_id int NOT NULL,
     name varchar NOT NULL,
     filePath varchar NOT NULL,
     created timestamp NOT NULL,
     updated timestamp,
     status int NOT NULL,
-    CONSTRAINT fk
-           FOREIGN KEY (event_id) REFERENCES Event (id)
+    data bytea NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS events (
+
+    id serial NOT NULL PRIMARY KEY,
+    user_id int NOT NULL,
+    file_id int NOT NULL,
+    created timestamp NOT NULL,
+    updated timestamp,
+    status int NOT NULL,
+    CONSTRAINT fk_events_users FOREIGN KEY (user_id) REFERENCES users (id),
+    CONSTRAINT fk_events_files FOREIGN KEY (file_id) REFERENCES files (id)
 
 );
+
+
 

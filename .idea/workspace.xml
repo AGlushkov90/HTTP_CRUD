@@ -4,7 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0401759e-c179-4afe-9b8b-2a4dc963a817" name="Changes" comment="" />
+    <list default="true" id="0401759e-c179-4afe-9b8b-2a4dc963a817" name="Changes" comment="init commit">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/dto/EventDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/dto/FileDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/dto/UserDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/service/EventService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/service/FileService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/utils/JsonUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/utils/MapperEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/utils/RequestUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/controller/EventController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/controller/EventRestControllerV1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/controller/FileRestControllerV1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/controller/UserRestControllerV1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/model/BaseItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/model/BaseItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/model/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/model/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/model/File.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/model/File.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/repository/GenericRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/repository/GenericRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/repository/impl/ORMEventRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/repository/impl/ORMEventRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/repository/impl/ORMFileRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/repository/impl/ORMFileRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/repository/impl/ORMUserRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/repository/impl/ORMUserRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V1__Init_db.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V1__Init_db.sql" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,12 +44,18 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
     <option name="FILTER_WARNINGS" value="false" />
     <option name="FILTER_INFO" value="true" />
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -39,6 +71,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Smart Tomcat.Unnamed.executor": "Run",
+    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/project java/HTTP_CRUD",
     "settings.editor.selected.configurable": "preferences.pluginManager"
@@ -100,7 +133,20 @@
       <option name="presentableId" value="Default" />
       <updated>1710081454442</updated>
     </task>
+    <task id="LOCAL-00001" summary="init commit">
+      <option name="closed" value="true" />
+      <created>1710538184564</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1710538184564</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="init commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -109,6 +155,16 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/controller/FileController.java</url>
           <line>77</line>
           <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/controller/EventRestControllerV1.java</url>
+          <line>21</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/glushkov/http_crud/service/FileService.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="36" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
