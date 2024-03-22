@@ -59,7 +59,7 @@ class FileServiceTest {
         verify(fileRepository).getByID(file.getId());
     }
     @Test
-    void whenSavePost_shouldReturnFile() throws IOException {
+    void whenSaveFile_shouldReturnFile() throws IOException {
         File file = new com.glushkov.http_crud.model.File(1L, "first", uploadPath + java.io.File.separator + "first.txt",
                 Date.valueOf(LocalDate.now()), null, Status.ACTIVE);
         when(fileServiceMock.save(any(), any(Long.class))).thenReturn(file);
@@ -68,7 +68,7 @@ class FileServiceTest {
     }
 
     @Test
-    void updatePost_whenPutFile() throws IOException {
+    void updateFile_whenPutFile() throws IOException {
         File file = new com.glushkov.http_crud.model.File(1L, "first", uploadPath + java.io.File.separator + "first.txt",
                 Date.valueOf(LocalDate.now()), null, Status.ACTIVE);
         File updateFile = new com.glushkov.http_crud.model.File(1L, "first update", uploadPath + java.io.File.separator + "first.txt",
