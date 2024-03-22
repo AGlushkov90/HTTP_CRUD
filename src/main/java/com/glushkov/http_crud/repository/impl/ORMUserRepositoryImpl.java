@@ -1,29 +1,26 @@
 package com.glushkov.http_crud.repository.impl;
 
+import com.glushkov.http_crud.model.Event;
+import com.glushkov.http_crud.model.File;
 import com.glushkov.http_crud.model.User;
 import com.glushkov.http_crud.repository.UserRepository;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ORMUserRepositoryImpl implements UserRepository {
 
     @Override
     public User getByID(Long id) {
         try (Session session = ORMCommonRepository.getSession()) {
-            return session.get(User.class, id);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    public User getByID(Long id, Session session) {
-        try  {
-            return session.get(User.class, id);
+            User user = session.get(User.class, id);
+            setUnproxyFile(user, session);
+            return user;
         } catch (HibernateException e) {
             e.printStackTrace();
         }
@@ -32,17 +29,11 @@ public class ORMUserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> getAll() {
-        return null;
-    }
-
-      @Override
-    public List<User> getAll(Session session) {
-        try {
-            List<User> users = session.createQuery("FROM User").list();
-            return users;
+        try (Session session = ORMCommonRepository.getSession()) {
+            return (List<User>) session.createQuery("FROM User").stream().
+                    peek(u -> setUnproxyFile((User) u, session)).collect(Collectors.toList());
         } catch (HibernateException e) {
             e.printStackTrace();
-
         }
         return null;
     }
@@ -95,16 +86,12 @@ public class ORMUserRepositoryImpl implements UserRepository {
         return null;
     }
 
-    @Override
-    public User edit(User item, Session session) {
-        try  {
-            session.update(item);
-            return item;
-        } catch (HibernateException e) {
-            e.printStackTrace();
-
+    private void setUnproxyFile(User user, Session session) {
+        session.detach(user);
+        Set<Event> events = user.getEvents();
+        for (Event event : events) {
+            event.setFile(Hibernate.unproxy(event.getFile(), File.class));
         }
-        return null;
     }
 }
 

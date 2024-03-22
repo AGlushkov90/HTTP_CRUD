@@ -1,7 +1,6 @@
 package com.glushkov.http_crud.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.glushkov.http_crud.model.Event;
 import com.glushkov.http_crud.model.File;
 import com.glushkov.http_crud.model.Status;
@@ -12,87 +11,96 @@ import com.glushkov.http_crud.repository.impl.ORMCommonRepository;
 import com.glushkov.http_crud.repository.impl.ORMEventRepositoryImpl;
 import com.glushkov.http_crud.repository.impl.ORMFileRepositoryImpl;
 import com.glushkov.http_crud.repository.impl.ORMUserRepositoryImpl;
-import com.glushkov.http_crud.utils.MapperEntity;
+import jakarta.servlet.http.Part;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.List;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class FileService {
 
-    private final FileRepository fileRepository = new ORMFileRepositoryImpl();
+    public FileRepository fileRepository = new ORMFileRepositoryImpl();
     private final EventRepository eventRepository = new ORMEventRepositoryImpl();
     private final UserRepository userRepository = new ORMUserRepositoryImpl();
-    private final ObjectMapper objectMapper = MapperEntity.getObjectMapper();
 
-    public String getByID(Long id) throws JsonProcessingException {
+    private final String uploadPath = "C:\\project java\\HTTP_CRUD\\src\\main\\resources\\files";
+
+    public FileService() {
+    }
+
+    public FileService(FileRepository fileRepository) {
+        this.fileRepository = fileRepository;
+    }
+
+    public java.io.File getByID(Long id) {
         File file = fileRepository.getByID(id);
-        return objectMapper.writeValueAsString(MapperEntity.convertToFileDto(file));
-    }
-
-    public String getAll() throws JsonProcessingException {
-        List<File> files = fileRepository.getAll();
-        return objectMapper.writeValueAsString(MapperEntity.convertToFilesDto(files));
-    }
-
-    public String delete(Long id) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(String.valueOf(fileRepository.delete(id)));
-    }
-
-    public String save(BufferedReader reader, Long userId) throws IOException {
-        StringBuilder buffer = new StringBuilder();
-        String line;
-        byte[] decodedBytes = null;
-        while ((line = reader.readLine()) != null) {
-//            if(line.startsWith("    \"data")){
-////               decodedBytes = Base64.getDecoder().decode(line.substring(12, line.length()-1));
-//               decodedBytes = Base64.getDecoder().decode("");
-//continue;
-//            }
-            buffer.append(line);
+        if (file == null){
+            return null;
         }
-        String fromJson = buffer.toString();
-        System.out.println(fromJson);
-        File file = objectMapper.readValue(fromJson, File.class);
-        file.setStatus(Status.ACTIVE);
-        file.setData(decodedBytes);
+        return new java.io.File(file.getFilePath());
+    }
 
+    public Set<java.io.File> getAll() throws JsonProcessingException {
+        return fileRepository.getAll().stream().map(f -> new java.io.File(f.getFilePath())).collect(Collectors.toSet());
+    }
+
+    public Boolean delete(Long id) throws JsonProcessingException {
+        return fileRepository.delete(id);
+    }
+
+    public File save(Part filePart, Long userId) throws IOException {
+
+        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        InputStream inputStream = filePart.getInputStream();
+        String filePath = uploadPath + java.io.File.separator + fileName;
+        Path path = Paths.get(filePath);
+        if (!Files.exists(path)) {
+            Files.copy(inputStream, path);
+        }
+        File file = new File();
+        file.setStatus(Status.ACTIVE);
+        file.setName(fileName);
+        file.setFilePath(filePath);
         Transaction tx = null;
         try (Session session = ORMCommonRepository.getSession()) {
             tx = session.beginTransaction();
-
             file = fileRepository.save(file);
             Event event = new Event();
             event.setFile(file);
             event.setUser(userRepository.getByID(userId));
             event.setStatus(Status.ACTIVE);
             eventRepository.save(event);
-
             tx.commit();
+            return file;
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
+            return null;
         }
-        return objectMapper.writeValueAsString(MapperEntity.convertToFileDto(file));
     }
 
-
-    public String edit(Long id, BufferedReader reader) throws IOException {
-
-        StringBuilder buffer = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            buffer.append(line);
-        }
+    public File edit(Part filePart, Long id) throws IOException {
+        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        InputStream inputStream = filePart.getInputStream();
+        String filePath = uploadPath + java.io.File.separator + fileName;
+        Files.copy(inputStream, Paths.get(filePath));
         File file = fileRepository.getByID(id);
-        String fromJson = buffer.toString();
-        System.out.println(fromJson);
-        File fileJson = objectMapper.readValue(fromJson, File.class);
-        file.setName(fileJson.getName());
-        file.setFilePath(fileJson.getFilePath());
-        return objectMapper.writeValueAsString(MapperEntity.convertToFileDto(fileRepository.edit(file)));
+        try{
+        file.setStatus(Status.ACTIVE);
+        file.setName(fileName);
+        file.setFilePath(filePath);
+        fileRepository.save(file);
+        return file;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

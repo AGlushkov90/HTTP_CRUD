@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -22,5 +23,10 @@ public class User extends BaseItem{
     @OneToMany(mappedBy = "user", cascade = {CascadeType.DETACH, CascadeType.REMOVE})
     @Fetch(FetchMode.SUBSELECT)
     private Set<Event> events;
+
+    public User(Long id, String name, Date created, Date updated, Status status) {
+        super(id, created, updated, status);
+        this.name = name;
+    }
 
 }

@@ -2,7 +2,6 @@ package com.glushkov.http_crud.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.lang.reflect.Array;
 import java.util.Optional;
 
 public class RequestUtils {
@@ -17,5 +16,8 @@ public class RequestUtils {
         } catch (NumberFormatException e) {
             return null;
         }
+    }
+    public String getNameFromParameters(HttpServletRequest req){
+        return req.getParameter("file");
     }
 }

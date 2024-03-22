@@ -10,7 +10,6 @@ import com.glushkov.http_crud.model.File;
 import com.glushkov.http_crud.model.User;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -49,7 +48,10 @@ public class MapperEntity {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setName(user.getName());
-        userDto.setEvents(user.getEvents().stream().map(MapperEntity::convertToEventDto).collect(Collectors.toSet()));
+        Set<Event> events = user.getEvents();
+        if (events != null) {
+            userDto.setEvents(user.getEvents().stream().map(MapperEntity::convertToEventDto).collect(Collectors.toSet()));
+        }
         return userDto;
     }
 

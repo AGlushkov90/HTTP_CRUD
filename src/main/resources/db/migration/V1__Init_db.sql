@@ -15,8 +15,7 @@ CREATE TABLE IF NOT EXISTS files  (
     filePath varchar NOT NULL,
     created timestamp NOT NULL,
     updated timestamp,
-    status int NOT NULL,
-    data bytea NOT NULL
+    status int NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS events (
@@ -29,7 +28,6 @@ CREATE TABLE IF NOT EXISTS events (
     status int NOT NULL,
     CONSTRAINT fk_events_users FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT fk_events_files FOREIGN KEY (file_id) REFERENCES files (id)
-
 );
 
 
